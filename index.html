@@ -1,1 +1,33 @@
-You made it! Now leave.
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Webhook</title>
+</head>
+<body>
+    <p>Webhook URL: </p>
+    <input type="text" id="webhook"><br>
+    <p>Username: </p>
+    <input type="text" id="username" value="Kitty"><br>
+    <p>Profile Image: </p>
+    <input type="text" id="image" value="https://th.bing.com/th/id/OIP.gOECfnl0ky0NKan2XcXyYwHaFk?pid=ImgDet&amp;rs=1"><br>
+    <p>Message: </p>
+    <input type="image" src="https://th.bing.com/th/id/OIP.gOECfnl0ky0NKan2XcXyYwHaFk?pid=ImgDet&amp;rs=1" alt="" width="50" height="50">
+    <input type="text" id="message">
+    <button onclick="sendMessage()">Send</button>
+    <script>
+        function sendMessage() {
+            const request = new XMLHttpRequest();
+            request.open("POST", document.getElementById("webhook").value);
+            request.setRequestHeader('Content-type', 'application/json');
+            const params = {
+                username: document.getElementById("username").value,
+                avatar_url: document.getElementById("image").value,
+                content: document.getElementById("message").value
+            }
+            request.send(JSON.stringify(params));
+        }
+    </script>
+
+</body></html>
