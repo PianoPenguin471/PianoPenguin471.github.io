@@ -13,8 +13,19 @@ function getRandomName(nameList) {
 function addName(name) {
     names.push(name)
 }
+
+function removeName(userInputName) {
+  names.forEach(name => {
+    if (name.toLowerCase().includes(userInputName.toLowerCase())) {
+      names.splice(names.indexOf(name), 1)
+    }
+  })
+}
+
 function getName() {
-    return document.getElementById("addName").value
+  let name = document.getElementById("addName").value
+  document.getElementById("addName").value = ""
+  return name
 }
 
 document.getElementById('nameFile')
