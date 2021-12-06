@@ -3,17 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Name Chooser</title>
-    <link rel="shortcut icon" href="download.png" type="image/x-icon">
+    <style>
+        body {
+            text-align: center;
+            background-image: url("https://namechooser.weebly.com/uploads/1/2/5/9/125966689/background-images/1389374582.png");
+        }
+        
+    </style>
 </head>
 <body>
     <input type="text" name="addName" id="addName">
     <button onclick="removeName(getName())">Remove name</button>
-    <button onclick="getRandomName(names)">Get random name from list</button>
-    <div id="output">Student to mark absent</div>
+    <button onclick="getRandomName(names)">Get random name</button> 
+<button onclick="addName(getName())">Add name to list</button>
+    <div id="output">Student name: </div>
     <br>
     <input type="file" name="nameFile" id="nameFile">
-    <script src="./script.js"></script>
+    <br>
+    <br>
+    <img src="https://images-ext-1.discordapp.net/external/06oJEAgpH8WA_bg0sk4mH6I3B8ISxSAHRHou7Ynz5yA/https/static.boredpanda.com/blog/wp-content/uploads/2021/09/6918F48C-335B-48F6-9018-046C40238A7B-6130510b828cc-jpeg__700.jpg?width=670&height=670"></img>
+    <script>
+        var names = []
+        var premiumNames = ["Daniel Christiansen", "Kevin Vanwormer", "Zachary DiGioia"]
+        // Weebly bypass stuffs
+        document.title = "Random Name Chooser"
+        document.body.onload = e => document.getElementById("weebly-footer-signup-container-v3").innerHTML = ""
+        function setFavicon(favImg){
+            let headTitle = document.querySelector('head');
+            let setFavicon = document.createElement('link');
+            setFavicon.setAttribute('rel','shortcut icon');
+            setFavicon.setAttribute('href',favImg);
+            headTitle.appendChild(setFavicon);
+        }
+        setFavicon('https://github.com/PianoPenguin471/PianoPenguin471.github.io/blob/main/download.png?raw=true');
+
+
+        const output = document.getElementById("output")
+        function getRandomName(nameList) {
+            let index = Math.round(Math.random() * (nameList.length - 1))
+            let name = nameList[index]
+            for (let index = 0; index < premiumNames.length; index++) {
+                const element = premiumNames[index];
+                if (name.includes(element)) {
+                    console.log(name + " is a premium member and has been saved")
+                    nameList.splice(index, 1)
+                    console.log(names)
+                    return
+                }
+            }
+            if ((name in premiumNames)) {
+                
+            }
+            if (name == undefined) name = "Names depleted"
+            if (name.includes("\n")) name = name.replaceAll("\n", "")
+            nameList.splice(index, 1)
+            output.innerText = "Name chosen: " + name
+            return name
+        }
+        function addName(name) {
+            names.push(name)
+        }
+
+        function removeName(userInputName) {
+        names.forEach(name => {
+            if (name.toLowerCase().includes(userInputName.toLowerCase())) {
+            names.splice(names.indexOf(name), 1)
+            }
+        })
+        }
+
+        function getName() {
+        let name = document.getElementById("addName").value
+        document.getElementById("addName").value = ""
+        return name
+        }
+
+        document.getElementById('nameFile')
+        .addEventListener('change', getFile)
+
+        function getFile(event) {
+            const input = event.target
+            document.title = "Random Name Chooser"
+            if ('files' in input && input.files.length > 0) {
+                const reader = new FileReader()
+                new Promise((resolve, reject) => {
+                    reader.onload = event => resolve(event.target.result)
+                    reader.onerror = error => reject(error)
+                    reader.readAsText(input.files[0])
+            }).then(content => {names=content.split(",")}).catch(error => console.error(error))
+        }
+        }
+
+        function placeFileContent(file) {
+            readFileContent(file).then(content => {
+            names = content.split(",")
+        }).catch(error => console.log(error))
+        }
+    </script>
 </body>
 </html>
