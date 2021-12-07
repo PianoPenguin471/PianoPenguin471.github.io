@@ -6,9 +6,8 @@
     <style>
         body {
             text-align: center;
-            background-image: url("https://namechooser.weebly.com/uploads/1/2/5/9/125966689/background-images/1389374582.png");
+            background-image: url("https://cdn.discordapp.com/attachments/910939198826102845/917893677676908595/1389374582.png");
         }
-        
     </style>
 </head>
 <body>
@@ -21,8 +20,16 @@
     <input type="file" name="nameFile" id="nameFile">
     <br>
     <br>
-    <img src="https://images-ext-1.discordapp.net/external/06oJEAgpH8WA_bg0sk4mH6I3B8ISxSAHRHou7Ynz5yA/https/static.boredpanda.com/blog/wp-content/uploads/2021/09/6918F48C-335B-48F6-9018-046C40238A7B-6130510b828cc-jpeg__700.jpg?width=670&height=670"></img>
+    <img src="https://images-ext-1.discordapp.net/external/cpQXWJiz8Jh7E1J-x114LeyOZXheYjA40tQzmFYzxAA/https/generated.inspirobot.me/a/b5eAjGZmJl.jpg?width=586&height=586"></img>
     <script>
+        const shuffleArray = array => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
         var names = []
         var premiumNames = ["Daniel Christiansen", "Kevin Vanwormer", "Zachary DiGioia"]
         // Weebly bypass stuffs
@@ -37,31 +44,30 @@
         }
         setFavicon('https://github.com/PianoPenguin471/PianoPenguin471.github.io/blob/main/download.png?raw=true');
 
-
         const output = document.getElementById("output")
         function getRandomName(nameList) {
-            let index = Math.round(Math.random() * (nameList.length - 1))
-            let name = nameList[index]
-            for (let index = 0; index < premiumNames.length; index++) {
-                const element = premiumNames[index];
-                if (name.includes(element)) {
-                    console.log(name + " is a premium member and has been saved")
-                    nameList.splice(index, 1)
-                    console.log(names)
-                    return
-                }
-            }
-            if ((name in premiumNames)) {
-                
-            }
+            let name = names.shift()
             if (name == undefined) name = "Names depleted"
-            if (name.includes("\n")) name = name.replaceAll("\n", "")
-            nameList.splice(index, 1)
+            if (premiumNames.includes(name) && !isListOnlyPremium()) {
+                names.push(name)
+                getRandomName(names)
+                return
+            }
             output.innerText = "Name chosen: " + name
             return name
         }
         function addName(name) {
             names.push(name)
+        }
+
+        function isListOnlyPremium() {
+            for (var i=0;i<names.length;i++) {
+                elem = names[i]
+                if (!(premiumNames.includes(elem))) {
+                    return false
+                }
+            }
+            return true
         }
 
         function removeName(userInputName) {
@@ -90,7 +96,7 @@
                     reader.onload = event => resolve(event.target.result)
                     reader.onerror = error => reject(error)
                     reader.readAsText(input.files[0])
-            }).then(content => {names=content.split(",")}).catch(error => console.error(error))
+            }).then(content => {names=content.replaceAll("\n", "").split(",");shuffleArray(names)}).catch(error => console.error(error))
         }
         }
 
