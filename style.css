@@ -19,8 +19,8 @@ body{
 a{
     position: relative;
     display: inline-block;
-    padding: 25px 30px;
-    margin: 40px 0;
+    padding: 15px 20px;
+    margin: 30px 20px;
     color: #03e9f4;
     text-decoration: none;
     text-transform: uppercase;
@@ -44,6 +44,12 @@ a:nth-child(1){
 }
 a:nth-child(2){
     filter: hue-rotate(110deg);
+}
+a:nth-child(4){
+    filter: hue-rotate(330deg);
+}
+a:nth-child(5){
+    filter: hue-rotate(60deg);
 }
 a span{
     position: absolute;
